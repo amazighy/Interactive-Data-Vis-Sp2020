@@ -19,7 +19,7 @@ var svg = d3.select("#chart-area")
 //   console.log(data);     
 // });
 
-d3.csv("../data/polution.csv"). then( data=> {
+d3.csv("../data/Polution.csv").then( data=> {
  //data.forEach(d => d['year'] = +d['year']);
   
   console.log()
