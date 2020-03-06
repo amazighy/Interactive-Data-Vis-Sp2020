@@ -1,0 +1,28 @@
+table{
+  margin-top: 2%;
+  margin-right: 2%;
+  margin-left: 3%;
+  border: 1px solid #AD51BD;
+  border-collapse: collapse;
+      width:90%;
+     
+  }
+  h1{
+      color:#007fff; 
+      text-align: center;
+  }
+  th,td{
+      font-weight: bold;
+      border-bottom: 1px solid#AD51BD;
+      
+  }
+  
+  
+  th:nth-child(n+1){
+      background:#AD51BD;
+      color:white;
+  }
+  
+  tr:hover {
+      background-color: #99ddff;
+  }

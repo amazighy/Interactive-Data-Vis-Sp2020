@@ -1,13 +1,21 @@
 <!DOCTYPE html>
+<html>
   <head>
     <meta charset="utf-8">
-    <title>Interactive Data Visualization Tutorial</title>
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./styles.css">
   </head>
+
   <body>
-    Welcome to Interactive Data Visualization Tutorials
-    <div id="d3-container"> </div>
-    <script src="../lib/d3.js"></script>
-    <script src="main.js"></script>
+
+     <h1><br>New York Income by zip codes</h1>
+     <div id="chart-area"></div>
+
+     <h5>source: census Data <br>New York Income by zip codes</h5>
+
+    <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    <script src="https://d3js.org/topojson.v2.min.js"></script>  
+    
+    <script src="./main.js"></script>
   </body>
 </html>

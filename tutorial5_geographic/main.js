@@ -1,58 +1,59 @@
-/**
- * CONSTANTS AND GLOBALS
- * */
-const width = window.innerWidth * 0.9,
-  height = window.innerHeight * 0.7,
-  margin = { top: 20, bottom: 50, left: 60, right: 40 };
 
-/** these variables allow us to access anything we manipulate in
- * init() but need access to in draw().
- * All these variables are empty before we assign something to them.*/
-let svg;
+const margin = { left:300, right:0, top:0, bottom:0 };
 
-/**
- * APPLICATION STATE
- * */
-let state = {
-  // + SET UP STATE
-};
+const width = 500 - margin.left - margin.right,
+      height = 460 - margin.top - margin.bottom;
 
-/**
- * LOAD DATA
- * Using a Promise.all([]), we can load more than one dataset at a time
- * */
-Promise.all([
-  d3.json("PATH_TO_YOUR_GEOJSON"),
-  d3.csv("PATH_TO_ANOTHER_DATASET", d3.autoType),
-]).then(([geojson, otherData]) => {
-  // + SET STATE WITH DATA
-  console.log("state: ", state);
-  init();
+var income_domain = [0, 10000, 50000, 70000, 80000, 150000, 290000, 360000]
+var income_color = d3.scaleThreshold()
+    .domain(income_domain)
+    .range(d3.schemeGreys[7]);
+
+var incomeData = d3.map();
+
+d3.queue()
+    .defer(d3.json, "../data/TopoNY.json")
+    .defer(d3.csv, "../data/Income.csv", function(d) { 
+        if (isNaN(d.income)) {
+            incomeData.set(d.id, 0); 
+        } else {
+            incomeData.set(d.id, +d.income); 
+        }   
+    }).await(ready);
+  
+function ready(error, data) {
+    if (error) throw error;
+
+    var new_york = topojson.feature(data, {
+        type: "GeometryCollection",
+        geometries: data.objects.ny.geometries
 });
 
-/**
- * INITIALIZING FUNCTION
- * this will be run *one time* when the data finishes loading in
- * */
-function init() {
-  // create an svg element in our main `d3-container` element
-  svg = d3
-    .select("#d3-container")
-    .append("svg")
-    .attr("width", width)
-    .attr("height", height);
+var projection = d3.geoAlbersUsa()
+    .fitExtent([[20, 20], [460, 580]], new_york);;
 
-  // + SET UP PROJECTION
-  // + SET UP GEOPATH
+var geoPath = d3.geoPath()
+    .projection(projection);
 
-  // + DRAW BASE MAP PATH
-  // + ADD EVENT LISTENERS (if you want)
+var svg= d3.select("#chart-area")
+.append("svg")
+.attr("width", width+margin.right+margin.left)
+.attr("height",height+margin.top+margin.bottom)
+.attr('transform', `translate(${margin.left}, ${margin.top})`);
 
-  draw(); // calls the draw function
+    svg.selectAll("path")
+        .data(new_york.features)
+        .enter()
+        .append("path")
+        .attr("d", geoPath)
+        .attr("fill", "white")
+        .transition().duration(1000)
+        .ease(d3.easeLinear)
+        .attr("fill", function(d) { 
+            var value = incomeData.get(d.properties.GEOID);
+            return (value != 0 ? income_color(value) : "grey");  
+
+        })
+        .attr("class", "counties-income");
 }
 
-/**
- * DRAW FUNCTION
- * we call this everytime there is an update to the data/state
- * */
-function draw() {}

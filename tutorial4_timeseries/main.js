@@ -1,81 +1,119 @@
-/* CONSTANTS AND GLOBALS */
-const width = window.innerWidth * 0.7,
-  height = window.innerHeight * 0.7,
-  margin = { top: 20, bottom: 50, left: 60, right: 40 },
-  radius = 5;
 
-// these variables allow us to access anything we manipulate in init() but need access to in draw().
-// All these variables are empty before we assign something to them.
-let svg;
-let xScale;
-let yScale;
+ // set the dimensions and margins of the graph
+ var margin = {top: 10, right: 0, bottom: 30, left: 400},
+ width = 900 - margin.left - margin.right,
+ height = 400 - margin.top - margin.bottom;
 
-/* APPLICATION STATE */
-let state = {
-  data: [],
-  selection: "All", // + YOUR FILTER SELECTION
-};
+// append the svg object to the body of the page
+var svg = d3.select("#chart-area")
+.append("svg")
+ .attr("width", width + margin.left + margin.right)
+ .attr("height", height + margin.top + margin.bottom)
+.append("g")
+.attr('transform', `translate(${margin.left}, ${margin.top})`);
 
-/* LOAD DATA */
-// + SET YOUR DATA PATH
-d3.json(YOUR_DATA_PATH, d3.autoType).then(raw_data => {
-  console.log("raw_data", raw_data);
-  state.data = raw_data;
-  init();
-});
+//Read the data
 
-/* INITIALIZING FUNCTION */
-// this will be run *one time* when the data finishes loading in
-function init() {
-  // + SCALES
+// var dataset = d3.csv("file.csv", function(data){
+//data.forEach(function(d){ d['columnName'] = +d['columnName']; });      
+//   console.log(data);     
+// });
 
-  // + AXES
+d3.csv("../data/polution.csv"). then( data=> {
+ //data.forEach(d => d['year'] = +d['year']);
+  
+  console.log()
+ var Countries = d3.map(data, d=>d.name).keys()
+ 
+ // add the options to the button
+ d3.select("#selectButton")
+   .selectAll('myOptions')
+      .data(Countries)
+   .enter()
+     .append('option')
+   .text( d => d) // text showed in the menu
+   .attr("value", d=> d ) // corresponding value returned by the drop down button button
 
-  // + UI ELEMENT SETUP
+ 
 
-  const selectElement = d3.select("#dropdown").on("change", function() {
-    // `this` === the selectElement
-    // 'this.value' holds the dropdown value a user just selected
-    state.selection = this.value; // + UPDATE STATE WITH YOUR SELECTED VALUE
-    console.log("new value is", this.value);
-    draw(); // re-draw the graph based on this new selection
-  });
+ var myColor = d3.scaleOrdinal()
+   .domain(Countries)
+   .range(d3.schemeSet2);
 
-  // add in dropdown options from the unique values in the data
-  selectElement
-    .selectAll("option")
-    .data(["All", "1", "2", "3"]) // + ADD DATA VALUES FOR DROPDOWN
-    .join("option")
-    .attr("value", d => d)
-    .text(d => d);
+   var xAxisGroup = svg.append("g")
+   .attr("transform", `translate(0, ${height})`)
+   
+   var yAxisGroup = svg.append("g");
+   svg.append("text")
+   .attr("class", "y axis-label")
+   .attr("x", - (height / 2))
+   .attr("y", -90)
+   .attr("font-weight", "bold")
+   .attr("font-size", "20px")
+   .attr("text-anchor", "middle")
+   .attr("transform", "rotate(-90)")
+   .text("metric tones per capita");
 
-  // + SET SELECT ELEMENT'S DEFAULT VALUE (optional)
 
-  // + CREATE SVG ELEMENT
+ // Add X axis --> it is a date format
+ var x = d3.scaleLinear()
+   .domain(d3.extent(data, d => d.year))
+   .range([ 0, width ]);
+   
 
-  // + CALL AXES
+  var y = d3.scaleLinear()
+  .domain([0, d3.max(data, d => +d.emission )])
+  .range([ height, 0 ]);
 
-  draw(); // calls the draw function
+  var xAxis = d3.axisBottom(x)
+  .ticks(6)
+  
+  var yAxis = d3.axisLeft(y)
+  .tickFormat(d => d+ ' metric tons');
+  
+
+ 
+ var line = svg
+   .append('g')
+   .append("path")
+     .datum(data.filter(d =>d.name==Countries[0]))
+     .attr("d", d3.line()
+       .x(d=> x(d.year))
+       .y(d=> y(+d.emission))
+     )
+     .attr("stroke", d=> myColor("valueA"))
+     .style("stroke-width", 4)
+     .style("fill", "none")
+   
+ // When the button is changed, run the updateChart function
+ d3.select("#selectButton").on("change", function(d) {
+     // recover the option that has been chosen
+     var selectedOption = d3.select(this).property("value")
+     // run the updateChart function with this selected option
+     update(selectedOption)
+     console.log(selectedOption)
+  })
+  xAxisGroup.call(xAxis);
+  yAxisGroup.call(yAxis);
+
+ function update(selectedGroup) {
+ 
+  xAxisGroup.call(xAxis);
+  yAxisGroup.call(yAxis);
+
+  var dataFilter = data.filter(d=> d.name==selectedGroup)
+  y.domain([0, d3.max(dataFilter, d => +d.emission)])
+  x.domain(d3.extent(dataFilter, d => +d.year))
+  // Give these new data to update line
+  line
+      .datum(dataFilter)
+      .transition()
+      .duration(1000)
+      .attr("d", d3.line()
+        .x(d=> x(d.year) )
+        .y(d=> y(+ d.emission) )
+      )
+      .attr("stroke", d => myColor(selectedGroup))     
 }
+})
 
-/* DRAW FUNCTION */
-// we call this everytime there is an update to the data/state
-function draw() {
-  // + FILTER DATA BASED ON STATE
-  //
-  // + UPDATE SCALE(S), if needed
-  //
-  // + UPDATE AXIS/AXES, if needed
-  //
-  // + DRAW CIRCLES, if you decide to
-  // const dot = svg
-  //   .selectAll("circle")
-  //   .data(filteredData, d => d.name)
-  //   .join(
-  //     enter => enter, // + HANDLE ENTER SELECTION
-  //     update => update, // + HANDLE UPDATE SELECTION
-  //     exit => exit // + HANDLE EXIT SELECTION
-  //   );
-  //
-  // + DRAW LINE AND AREA
-}

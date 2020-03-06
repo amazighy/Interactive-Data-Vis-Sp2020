@@ -1,0 +1,66 @@
+[
+	{
+		"name": "USA",
+		"emission": "16.5"
+	},
+	{
+		"name": "Australia",
+		"emission": "15.4"
+	},
+	{
+		"name": "Canada",
+		"emission": "15.1"
+	},
+	{
+		"name": "Natherlands",
+		"emission": "9.9"
+	},
+	{
+		"name": "Japan",
+		"emission": "9.5"
+	},
+	{
+		"name": "Germany",
+		"emission": "8.9"
+	},
+	{
+		"name": "Uk",
+		"emission": "6.5"
+	},
+	{
+		"name": "spain",
+		"emission": "5.0"
+	},
+	{
+		"name": "France",
+		"emission": "4.6"
+	},
+	{
+		"name": "Sweden",
+		"emission": "4.5"
+	},
+	{
+		"name": "Brazil",
+		"emission": "2.6"
+	},
+	{
+		"name": "India",
+		"emission": "1.7"
+	},
+	{
+		"name": "Uganda",
+		"emission": "0.1"
+	},
+	{
+		"name": "Chad",
+		"emission": "0.1"
+	},
+	{
+		"name": "Rawanda",
+		"emission": "0.1"
+	},
+	{
+		"name": "Somalia",
+		"emission": "0.0"
+	}
+]
