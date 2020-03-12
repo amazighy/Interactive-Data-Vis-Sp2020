@@ -1,12 +1,79 @@
-<!DOCTYPE html>
-  <head>
-    <meta charset="utf-8">
-    <title>Interactive Data Visualization Tutorial</title>
-    <link rel="stylesheet" href="./style.css">
-  </head>
-  <body>
-    Welcome to Interactive Data Visualization Tutorials
-    <script src="../lib/d3.js"></script>
-    <script src="main.js"></script>
-  </body>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <title>DataVis</title>
+</head>
+<body>
+
+  <div class="white section">
+    <h2 class="black-text center">Data Vis Projects</h2>
+  </div>
+  <div class="" style="position: relative">
+    <p >
+    <b> Please add your name to the Interactive Data Project Tree:</b><br> 
+      Please Follow these steps:<br> 
+    <b>Note:</b> as Prof. Aucher explained,  whoever presents first for project 1, goes second in project 2.<br>
+  <b> Please fill-up the form twice:</b>
+      <br> &emsp; &emsp; <b>1. For project 1.</b> whether you are going first or second copy the relevant date from the diagram.
+      <br> &emsp; &emsp;&emsp; &emsp; - click on the plus button icon, past the date twice where the placeholder indicates: <b>Please past the date of the relevent project</b>.
+      <br> &emsp; &emsp;&emsp; &emsp; - Input your first and last name, and hit submit.
+<br> &emsp; &emsp; <b>1. For project 2.</b> copy the relevant date and repeat the steps in project 1.
+
+      
+      
+        </p>
+    <a class="btn-floating btn-large halfway-fab pink modal-trigger" href="#modal">
+      <i class="material-icons">add</i>
+    </a>
+  </div>
+  
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <h4 class="pink-text center">Sign up for a Project</h4>
+      <form>
+        <div class="input-field">
+          <input type="text" id="name" placeholder="First name" />
+        </div>
+        <div class="input-field">
+          <input type="text" id="Lname" placeholder="Last name" />
+        </div>
+        <div class="input-field">
+          <input type="text" id="parent" placeholder="Please past the date of the relevent project" />
+        </div>
+        
+        <div class="input-field">
+          <input type="text" id="department" placeholder="Please past the date of the relevent project" />
+        </div>
+        <div class="input-field center">
+          <button class="btn pink white-text">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <div class="container">
+    <div class="canvas"></div>
+  </div>
+
+  
+  <!-- scripts -->
+  <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-firestore.js"></script>
+  
+    // Initialize Firebase
+    <script src="FireStore.js"></script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+  <script src="https://d3js.org/d3.v5.js"></script>
+  <script src="index.js"></script>
+  <script src="main.js"></script>
+</body>
 </html>
