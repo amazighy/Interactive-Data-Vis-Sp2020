@@ -1,12 +1,14 @@
   // Your web app's Firebase configuration
+  // Your web app's Firebase configuration
+  // Your web app's Firebase configuration
   var firebaseConfig = {
-    apiKey: "AIzaSyD6AkqSnrAPQKfIeNtxR4MBr2aiWVcdOpQ",
-    authDomain: "timetracker-cd4b2.firebaseapp.com",
-    databaseURL: "https://timetracker-cd4b2.firebaseio.com",
-    projectId: "timetracker-cd4b2",
-    storageBucket: "timetracker-cd4b2.appspot.com",
-    messagingSenderId: "287447924853",
-    appId: "1:287447924853:web:2740b362369983fcfb783c"
+    apiKey: "AIzaSyANuC2fX0v31TJnJPSokfBHR9GyWD4ai1E",
+    authDomain: "trake-26ad5.firebaseapp.com",
+    databaseURL: "https://trake-26ad5.firebaseio.com",
+    projectId: "trake-26ad5",
+    storageBucket: "trake-26ad5.appspot.com",
+    messagingSenderId: "653773399172",
+    appId: "1:653773399172:web:cb592b0a3aa542144a0ed1"
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
@@ -14,3 +16,5 @@
   const db = firebase.firestore();
   const settings = {timestampsInSnapshots: true};
   db.settings(settings);
+
+  

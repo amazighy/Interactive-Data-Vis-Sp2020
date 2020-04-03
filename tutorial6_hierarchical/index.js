@@ -10,7 +10,7 @@ const department = document.querySelector('#department');
 form.addEventListener('submit', e => {
   e.preventDefault();
 
-  db.collection('Project_Hierarchy').add({
+  db.collection('trake-26ad5').add({
     name: name.value, 
     Lname: Lname.value, 
     parent: parent.value, 

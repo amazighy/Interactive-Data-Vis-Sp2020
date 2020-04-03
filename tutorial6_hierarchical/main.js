@@ -87,7 +87,7 @@ console.log(data)
 // data & firebase hook-up
 var data = [];
 
-db.collection('Project_Hierarchy').onSnapshot(res=> {
+db.collection('trake-26ad5').onSnapshot(res=> {
 
   res.docChanges().forEach(change => {
 
